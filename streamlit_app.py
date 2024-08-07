@@ -16,6 +16,11 @@ exclude_options = ['lechuga', 'pollo', 'pescado', 'pasta', 'queso', 'aceite', 'a
 exclude_ingredients = st.multiselect("Ingredientes a excluir", exclude_options)
 exclude_list = exclude_words + exclude_ingredients
 
+# Crear un input para seleccionar el rango de precios
+price_options = ['$', '$$', '$$$', '$$$$']
+selected_price_range = st.multiselect("Selecciona el rango de precios", options=price_options)
+
+
 
 if uploaded_file is not None:
     # Leer el archivo Excel
@@ -34,6 +39,10 @@ if uploaded_file is not None:
         filtered_df = df[~df['Ingredientes'].apply(lambda x: should_exclude_recipe(x, exclude_list))]
     else: 
         filtered_df = df
+
+    if selected_price_range:
+        # Filtrar las recetas que están dentro del rango de precios seleccionado
+        filtered_df = filtered_df[filtered_df['Precio'].isin(selected_price_range)]
     # Mostrar el DataFrame filtrado
     st.write("Aquí están las recetas filtradas del archivo Excel:")
     st.dataframe(filtered_df)
