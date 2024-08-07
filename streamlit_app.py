@@ -48,24 +48,30 @@ if uploaded_file is not None:
     st.dataframe(filtered_df)
 
 
-    if len(filtered_df) >= 3:
-        breakfast_recipe = filtered_df.sample(n=1)
-        lunch_recipe = filtered_df.sample(n=1)
-        dinner_recipe = filtered_df.sample(n=1)
+    if len(filtered_df[filtered_df['Tipo'] == 'Desayuno']) >= 1 and \
+        len(filtered_df[filtered_df['Tipo'] == 'Comida']) >= 1 and \
+        len(filtered_df[filtered_df['Tipo'] == 'Cena']) >= 1:
+
+        breakfast_recipe = filtered_df[filtered_df['Tipo'] == 'Desayuno'].sample(n=1)
+        lunch_recipe = filtered_df[filtered_df['Tipo'] == 'Comida'].sample(n=1)
+        dinner_recipe = filtered_df[filtered_df['Tipo'] == 'Cena'].sample(n=1)
         
         st.markdown("### Desayuno")
         st.markdown(f"**Nombre:** {breakfast_recipe.iloc[0]['Nombre']}")
         st.markdown(f"**Ingredientes:** {breakfast_recipe.iloc[0]['Ingredientes']}")
         st.markdown(f"**Preparación:** {breakfast_recipe.iloc[0]['Preparación']}")
+        st.markdown(f"**Precio:** {breakfast_recipe.iloc[0]['Precio']}")
 
         st.markdown("### Comida")
         st.markdown(f"**Nombre:** {lunch_recipe.iloc[0]['Nombre']}")
         st.markdown(f"**Ingredientes:** {lunch_recipe.iloc[0]['Ingredientes']}")
         st.markdown(f"**Preparación:** {lunch_recipe.iloc[0]['Preparación']}")
+        st.markdown(f"**Precio:** {lunch_recipe.iloc[0]['Precio']}")
 
         st.markdown("### Cena")
         st.markdown(f"**Nombre:** {dinner_recipe.iloc[0]['Nombre']}")
         st.markdown(f"**Ingredientes:** {dinner_recipe.iloc[0]['Ingredientes']}")
         st.markdown(f"**Preparación:** {dinner_recipe.iloc[0]['Preparación']}")
+        st.markdown(f"**Precio:** {dinner_recipe.iloc[0]['Precio']}")
     else:
         st.write("No hay suficientes recetas disponibles después de aplicar los filtros.")
